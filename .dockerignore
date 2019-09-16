@@ -1,0 +1,14 @@
+.editorconfig
+.git
+.gitignore
+.gradle
+.idea
+README.md
+CODEOWNERS
+build
+deploy
+gradle
+gradlew
+gradlew.bat
+*.iml
+.ipr

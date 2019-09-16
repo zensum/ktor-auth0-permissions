@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+      docker:
+        - image: quay.io/klira/gradle-with-docker-client # (1)
+      working_directory: ~/workdir
+      steps:
+        - checkout
+        - setup_remote_docker
+        - run: chmod -v +x .circleci/*.sh
+        - run: sh .circleci/docker-build.sh
+        - persist_to_workspace:
+            root: /tmp/workspace/
+            paths:
+              ### Jib build
+              #- jib-image.tar
+
+              ### Default - shadowJar build
+              - latest
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build:
+          context: org-global

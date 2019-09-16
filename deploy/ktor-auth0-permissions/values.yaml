@@ -1,0 +1,17 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: gcr.io/zens-main/ktor-auth0-permissions
+  tag: latest
+  pullPolicy: IfNotPresent
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+env:
+  kafkaHost: operated-kafka2-kafka-bootstrap.kafka.svc.cluster.local:9092
+
