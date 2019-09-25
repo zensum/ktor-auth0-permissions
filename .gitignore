@@ -9,6 +9,11 @@
 target/
 out/
 
+# Files used for running this as an appliction, but that should not be committed
+Main.kt
+application.conf
+logback.xml
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
