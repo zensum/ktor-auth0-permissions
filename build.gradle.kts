@@ -1,5 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version("1.3.50")
+    id("maven") apply true
 }
 
 group = "se.zensum"
