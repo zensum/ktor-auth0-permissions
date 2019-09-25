@@ -29,3 +29,19 @@ dependencies {
     implementation("io.ktor", "ktor-server-netty", ktor)
     implementation("io.ktor", "ktor-auth-jwt", ktor)
 }
+
+tasks {
+    test {
+        useJUnitPlatform()
+
+        // Show test results.
+        testLogging {
+            events("passed", "skipped", "failed")
+            showStandardStreams = true
+        }
+        reports {
+            junitXml.isEnabled = false
+            html.isEnabled = true
+        }
+    }
+}
