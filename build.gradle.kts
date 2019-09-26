@@ -27,8 +27,7 @@ dependencies {
     // Ktor
     val ktor = "1.2.0"
     implementation(platform("io.ktor:ktor-server-core:$ktor"))
-    implementation("io.ktor", "ktor-server-netty", ktor)
-    implementation("io.ktor", "ktor-auth-jwt", ktor)
+    api("io.ktor", "ktor-auth-jwt", ktor)
 }
 
 tasks {
