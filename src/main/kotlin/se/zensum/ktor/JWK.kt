@@ -24,7 +24,7 @@ fun Authentication.Configuration.auth0(
         verifier(jwkProvider, jwkIssuer)
         realm = jwkRealm
         validate { credentials: JWTCredential ->
-            val principal: JwtPrincipal = JwtPrincipal.fromPayload(credentials.payload)
+            val principal: JwtPrincipal = JwtPrincipal(credentials.payload)
             if(jwkAudience in principal.audience) {
                 principal
             } else {
