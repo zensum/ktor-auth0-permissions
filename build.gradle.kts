@@ -1,5 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version("1.3.50")
+    id("java-library") apply true
     id("maven") apply true
 }
 
