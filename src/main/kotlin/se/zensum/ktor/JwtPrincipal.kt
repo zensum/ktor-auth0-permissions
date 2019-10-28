@@ -5,16 +5,20 @@ import com.auth0.jwt.interfaces.Payload
 import io.ktor.auth.Principal
 
 data class JwtPrincipal(
-    private val payload: Payload
-): Principal, Payload by payload {
-    val permissions: List<String> = permissions(payload)
+    private val claims: Map<String, Any?>
+): Principal, JsonWebToken, Map<String, Any?> by claims {
+    val permissions: List<String> = permissions(claims)
 
-    override fun getAudience(): List<String> = audience(payload)
+    override fun getAudience(): List<String> = audience(claims)
 
     fun hasPermission(permission: String): Boolean = permission in permissions
 
     companion object {
-        private fun permissions(payload: Payload): List<String> {
+        fun fromPayload(payload: Payload): JwtPrincipal {
+
+        }
+
+        private fun permissions(claims: Map<String, Any?>): List<String> {
             return when {
                 "permissions" in payload.claims -> payload.resolveClaim("permissions") {
                     it.asList(String::class.java)
