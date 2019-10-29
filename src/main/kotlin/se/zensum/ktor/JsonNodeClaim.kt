@@ -82,7 +82,7 @@ data class JsonNodeClaim(private val node: JsonNode): Claim {
         }
     }
 
-    override fun <T: Any?> asArray(tClazz: Class<T>): Array<T>? =
+    override fun <T: Any> asArray(tClazz: Class<T>): Array<T>? =
         asList(tClazz)?.toArray(tClazz)
 
     companion object {
@@ -96,18 +96,8 @@ data class JsonNodeClaim(private val node: JsonNode): Claim {
 }
 
 @Suppress("UNCHECKED_CAST")
-internal fun <T> List<T>.toArray(clazz: Class<T>): Array<T> {
-    val actualClass: Class<*> = when(clazz) {
-        Byte::class.java -> Byte::class.javaObjectType
-        Short::class.java -> Short::class.javaObjectType
-        Int::class.java -> Int::class.javaObjectType
-        Long::class.java -> Long::class.javaObjectType
-        Float::class.java -> Float::class.javaObjectType
-        Double::class.java -> Double::class.javaObjectType
-        Char::class.java -> Char::class.javaObjectType
-        else -> clazz
-    }
-
+internal fun <T: Any> List<T>.toArray(clazz: Class<T>): Array<T> {
+    val actualClass: Class<T> = clazz.kotlin.javaObjectType
     val array: Array<T> = java.lang.reflect.Array.newInstance(actualClass, size) as Array<T>
     this.forEachIndexed { index: Int, obj: T ->
         array[index] = obj
