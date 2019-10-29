@@ -82,20 +82,8 @@ data class JsonNodeClaim(private val node: JsonNode): Claim {
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun <T: Any?> asArray(tClazz: Class<T>): Array<T>? {
-        return if(node.isArray) {
-            tryParse {
-                val array = Array<Any?>(node.size()) { i ->
-                    val value: JsonNode = node.get(i)
-                    jacksonObjectMapper().convertValue(value, tClazz)
-                }
-                array as? Array<T>
-            }
-        } else {
-            null
-        }
-    }
+    override fun <T: Any?> asArray(tClazz: Class<T>): Array<T>? =
+        asList(tClazz)?.toArray(tClazz)
 
     companion object {
         private val mapType = object: TypeReference<Map<String, Any?>>() {}
@@ -105,4 +93,25 @@ data class JsonNodeClaim(private val node: JsonNode): Claim {
             return JsonNodeClaim(node)
         }
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+internal fun <T> List<T>.toArray(clazz: Class<T>): Array<T> {
+    val actualClass: Class<*> = when(clazz) {
+        Byte::class.java -> Byte::class.javaObjectType
+        Short::class.java -> Short::class.javaObjectType
+        Int::class.java -> Int::class.javaObjectType
+        Long::class.java -> Long::class.javaObjectType
+        Float::class.java -> Float::class.javaObjectType
+        Double::class.java -> Double::class.javaObjectType
+        Char::class.java -> Char::class.javaObjectType
+        else -> clazz
+    }
+
+    val array: Array<T> = java.lang.reflect.Array.newInstance(actualClass, size) as Array<T>
+    this.forEachIndexed { index: Int, obj: T ->
+        array[index] = obj
+    }
+
+    return array
 }
