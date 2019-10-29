@@ -29,6 +29,11 @@ dependencies {
     val ktor = "1.2.0"
     implementation(platform("io.ktor:ktor-server-core:$ktor"))
     api("io.ktor", "ktor-auth-jwt", ktor)
+
+    // Jackson
+    implementation("com.fasterxml.jackson.core:jackson-core:2.9.9")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.9")
 }
 
 tasks {

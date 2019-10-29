@@ -1,8 +1,9 @@
 package se.zensum.ktor
 
+import com.auth0.jwt.interfaces.Claim
 import java.time.Instant
 
-interface JsonWebToken: Map<String, Any?> {
+interface JsonWebToken: Map<String, Claim> {
     /**
      * @return the issuer (`iss`) of the token
      */
