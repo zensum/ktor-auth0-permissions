@@ -7,12 +7,12 @@ interface JsonWebToken: Map<String, Claim> {
     /**
      * @return the issuer (`iss`) of the token
      */
-    fun issuer(): String = getValue("iss").toString()
+    fun issuer(): String = getValue("iss").asString()
 
     /**
      * @return the subject (`sub`) for the token
      */
-    fun subject(): String = getValue("sub").toString()
+    fun subject(): String = getValue("sub").asString()
 
     /**
      * @return the audience(s) (`aud`) for the token
@@ -28,7 +28,7 @@ interface JsonWebToken: Map<String, Claim> {
      * @return the time from which the token is valid (`nbf`). A token
      * cannot be used before this point in time.
      */
-    fun notBefore(): Instant = claimAsInstant("nbf")
+    fun notBefore(): Instant? = claimAsInstant("nbf")
 
     /**
      * @return the time for when the token was issued (`iat`)
@@ -36,12 +36,12 @@ interface JsonWebToken: Map<String, Claim> {
     fun issuedAt(): Instant = claimAsInstant("iat")
 
     private fun claimAsInstant(claim: String): Instant {
-        val unixEpochSeconds: Long = getValue(claim).toString().toLong()
+        val unixEpochSeconds: Long = getValue(claim).asLong()
         return Instant.ofEpochSecond(unixEpochSeconds)
     }
 
     /**
      * @return the id for the token (`jti`), if present, else null
      */
-    fun id(): String? = this["jti"]?.toString()
+    fun id(): String? = this["jti"]?.asString()
 }
