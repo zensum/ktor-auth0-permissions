@@ -1,11 +1,18 @@
+import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
+import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
+import groovy.lang.GroovyObject
+import org.gradle.api.publish.maven.*
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version("1.3.50")
     id("java-library") apply true
     id("maven") apply true
+    id("maven-publish")
+    id("com.jfrog.artifactory") version "4.8.1" apply true
 }
 
 group = "se.zensum"
-version = "0.1.0"
+version = "0.1.1"
 description = "Add support for reading permissions from Auth0 JSON web tokens in Ktor"
 
 defaultTasks = mutableListOf("test")
@@ -52,6 +59,27 @@ tasks {
         reports {
             junitXml.isEnabled = false
             html.isEnabled = true
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("https://artifactory.5z.fyi/artifactory/public")
+            credentials {
+                username = System.getenv().getValue("ARTIFACTORY_USERNAME")
+                password = System.getenv().getValue("ARTIFACTORY_PASSWORD")
+            }
+        }
+    }
+
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = rootProject.group.toString()
+            artifactId = rootProject.name
+            version = rootProject.version.toString()
+            from(components["java"])
         }
     }
 }
