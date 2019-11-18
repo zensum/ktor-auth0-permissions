@@ -31,9 +31,9 @@ dependencies {
     api("io.ktor", "ktor-auth-jwt", ktor)
 
     // Jackson
-    implementation("com.fasterxml.jackson.core:jackson-core:2.9.9")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.9")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.9.10.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.10.1")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10.1")
 
     // Testing
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
